@@ -44,7 +44,7 @@ public class UserService implements ILoginService<User> {
     }
 
     @Override
-    public List<User> findAll(Integer id) {
+    public List<User> findAll(String username) {
         return null;
     }
 
@@ -52,6 +52,15 @@ public class UserService implements ILoginService<User> {
     public Optional<User> findById(Integer id) {
         try {
             return Optional.ofNullable(this.repo.findById(id));
+        } catch (SQLException e) {
+            throw new ServiceJDBCException(e.getMessage(), e.getCause());
+        }
+    }
+
+    @Override
+    public Optional<User> findByUsername(String username) {
+        try {
+            return Optional.ofNullable(this.repo.findByUsername(username));
         } catch (SQLException e) {
             throw new ServiceJDBCException(e.getMessage(), e.getCause());
         }

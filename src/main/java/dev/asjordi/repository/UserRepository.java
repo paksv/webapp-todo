@@ -31,7 +31,7 @@ public class UserRepository implements ILoginRepository<User> {
     }
 
     @Override
-    public List<User> findAll(Integer id) throws SQLException {
+    public List<User> findAll(String username) throws SQLException {
         return null;
     }
 
