@@ -1,49 +1,55 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 
 <jsp:include page="layout/header.jsp" />
-<h1>Add User</h1>
-<form action="${pageContext.request.contextPath}/users/add" method="post">
-    <div class="row mb-2">
-        <label class="col-form-label col-sm-2" for="firstName">First Name</label>
-        <div class="col-sm-4">
-            <input class="form-control" type="text" id="firstName" name="firstName" value="${requestScope.user.getFirstName()}">
+<div class="container col-md-5" style="height: calc(100vh - 128px);">
+    <div class="card mt-2">
+        <div class="card-header">
+            Add User
         </div>
-        <c:if test="${errors != null && errors.containsKey('firstName')}">
-            <div style="color: red">${errors.get('firstName')}</div>
-        </c:if>
-    </div>
-    <div class="row mb-2">
-        <label class="col-form-label col-sm-2" for="lastName">Last Name</label>
-        <div class="col-sm-4">
-            <input class="form-control" type="text" id="lastName" name="lastName" value="${requestScope.user.getLastName()}">
+        <div class="card-body">
+            <form action="${pageContext.request.contextPath}/users/add" method="post">
+                <div>
+                    <label class="col-form-label" for="firstName">First Name</label>
+                    <div>
+                        <input class="form-control" type="text" id="firstName" name="firstName" value="${requestScope.user.getFirstName()}" required>
+                    </div>
+                    <c:if test="${errors != null && errors.containsKey('firstName')}">
+                        <div style="color: red">${errors.get('firstName')}</div>
+                    </c:if>
+                </div>
+                <div>
+                    <label class="col-form-label" for="lastName">Last Name</label>
+                    <div>
+                        <input class="form-control" type="text" id="lastName" name="lastName" value="${requestScope.user.getLastName()}" required>
+                    </div>
+                    <c:if test="${errors != null && errors.containsKey('lastName')}">
+                        <div style="color: red">${errors.get('lastName')}</div>
+                    </c:if>
+                </div>
+                <div>
+                    <label class="col-form-label" for="username">Username</label>
+                    <div>
+                        <input class="form-control" type="text" id="username" name="username" value="${requestScope.user.getUsername()}" required>
+                    </div>
+                    <c:if test="${errors != null && errors.containsKey('username')}">
+                        <div style="color: red">${errors.get('username')}</div>
+                    </c:if>
+                </div>
+                <div>
+                    <label class="col-form-label" for="password">Password</label>
+                    <div>
+                        <input class="form-control" type="password" minlength="4" id="password" name="password" value="${requestScope.user.getPassword()}" required>
+                    </div>
+                    <c:if test="${errors != null && errors.containsKey('password')}">
+                        <div style="color: red">${errors.get('password')}</div>
+                    </c:if>
+                </div>
+                <div class="d-flex align-items-center justify-content-center mt-2">
+                    <input class="btn btn-primary" type="submit" value="${(user.getId() != null) && (user.getId() > 0) ? "Update" : "Save"}">
+                </div>
+                <input type="hidden" name="id" value="${user.getId() != null ? user.getId() : ""}">
+            </form>
         </div>
-        <c:if test="${errors != null && errors.containsKey('lastName')}">
-            <div style="color: red">${errors.get('lastName')}</div>
-        </c:if>
     </div>
-    <div class="row mb-2">
-        <label class="col-form-label col-sm-2" for="username">Username</label>
-        <div class="col-sm-4">
-            <input class="form-control" type="text" id="username" name="username" value="${requestScope.user.getUsername()}">
-        </div>
-        <c:if test="${errors != null && errors.containsKey('username')}">
-            <div style="color: red">${errors.get('username')}</div>
-        </c:if>
-    </div>
-    <div class="row mb-2">
-        <label class="col-form-label col-sm-2" for="password">Password</label>
-        <div class="col-sm-4">
-            <input class="form-control" type="password" minlength="4" id="password" name="password" value="${requestScope.user.getPassword()}">
-        </div>
-        <c:if test="${errors != null && errors.containsKey('password')}">
-            <div style="color: red">${errors.get('password')}</div>
-        </c:if>
-    </div>
-    <div class="row mb-2">
-        <div>
-            <input class="btn btn-primary" type="submit" value="${(user.getId() != null) && (user.getId() > 0) ? "Update" : "Save"}">
-        </div>
-    </div>
-    <input type="hidden" name="id" value="${user.getId() != null ? user.getId() : ""}">
-</form>
+</div>
 <jsp:include page="layout/footer.jsp" />
