@@ -12,11 +12,17 @@ RUN mvn -e -B package
 
 FROM tomcat:10.1.19-jre21-temurin AS runtime
 
-EXPOSE 8080
-
-RUN rm -rf /usr/local/tomcat/webapps/* \
+RUN apt-get update && apt-get install -y curl \
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /usr/local/tomcat/webapps/* \
     && rm -rf /usr/local/tomcat/webapps.dist \
     && mkdir -p /usr/local/tomcat/webapps
+
+RUN groupadd -r appuser && useradd -r -g appuser appuser
+
+RUN chown -R appuser:appuser /usr/local/tomcat
+
+USER appuser
 
 ENV CATALINA_OPTS="-Dorg.apache.catalina.startup.VersionLoggerListener.log=false \
                    -Djava.security.egd=file:/dev/./urandom \
@@ -25,5 +31,10 @@ ENV CATALINA_OPTS="-Dorg.apache.catalina.startup.VersionLoggerListener.log=false
 COPY --from=build /app/target/webapp-todo.war /usr/local/tomcat/webapps/ROOT.war
 
 COPY lib/mysql-connector-java-8.0.30.jar /usr/local/tomcat/lib
+
+EXPOSE 8080
+
+HEALTHCHECK --interval=10s --timeout=5s --start-period=30s --retries=3 \
+  CMD curl -f http://localhost:8080 || exit 1
 
 CMD ["/usr/local/tomcat/bin/catalina.sh", "run"]
