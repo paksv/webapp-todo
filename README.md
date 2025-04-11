@@ -21,9 +21,38 @@ TODO App is a web application to manage tasks and users. It is developed with Ja
 * CDI
 * Tomcat
 * MySQL
+* Docker
 * Bootstrap
 
 ## Installation :gear:
+
+> You can run the application in a Docker container or in your local environment.
+
+> If you don't want to build the application, you can download the Docker image from the [Packages section](https://github.com/ASJordi/webapp-todo/pkgs/container/webapp-todo)
+
+### Docker :whale:
+
+- Build the Docker image
+
+  ```bash
+  docker build -t todo-app .
+  ```
+
+- Run the Docker container
+
+  ```bash
+    docker container run -p 8080:8080 todo-app
+  ```
+  
+- Use `docker-compose` to run the application with MySQL and PhpMyAdmin
+
+  ```bash
+  docker compose up -d
+  ```
+
+> Make sure to create the database with the script in `src/main/resources/db/db.sql` before running the application.
+
+### Local :computer:
 
 - Clone the repository
 
@@ -44,7 +73,6 @@ TODO App is a web application to manage tasks and users. It is developed with Ja
   ```bash
   mvn tomcat7:redeploy
   ```
-
 
 ## License :page_facing_up:
 
