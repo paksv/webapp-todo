@@ -35,7 +35,8 @@ services:
       - default
 
   web:
-    image: asjordi/webapp-todo:1.0.0
+    image: ghcr.io/asjordi/webapp-todo:main
+#    image: asjordi/webapp-todo:1.0.0
     container_name: webapp-todo
     restart: unless-stopped
     depends_on:
